@@ -1,17 +1,57 @@
+import { useState } from "react";
+import axios from "axios";
+import MobileMockup from "../components/mobileMockup";
+
 function Login() {
+  const [userEmail, setUserEmail] = useState();
+  const [password, setPassword] = useState();
+
+  async function sendLoginCredentials(e) {
+    e.preventDefault();
+    try {
+      const uri = "http://localhost:3000/auth/login";
+      const response = await axios.post(uri, { email: userEmail, password });
+      console.log(response.data);
+    } catch (error) {
+      console.log(error.message);
+    }
+  }
+
   return (
     <>
-      <section className="flex flex-col justify-center align-bottom bg-[#916BBF] w-1/2 h-screen">
-        <div>
-          <h1 className="text-4xl">SPR Catering</h1>
-          <p>Welcome to SPR</p>
-          <p>Join us now!</p>
+      <section className="flex justify-between">
+        <MobileMockup />
+        <div className="p-48  w-1/2 flex flex-col gap-y-10">
+          <h2 className="text-3xl text-center">Sign In Account</h2>
+          <form className="grid gap-2" onSubmit={sendLoginCredentials}>
+            <input
+              type="email"
+              className="input-element"
+              name="email"
+              placeholder="Email address here"
+              required
+              autoFocus
+              onChange={(e) => {
+                setUserEmail(e.target.value);
+              }}
+            />
+            <input
+              type="password"
+              className="input-element"
+              name="password"
+              placeholder="Enter your password"
+              required
+              onChange={(e) => {
+                setPassword(e.target.value);
+              }}
+            />
+            <input
+              type="submit"
+              value="Sign In"
+              className="bg-[#916BBF] p-3 rounded-lg text-2xl text-white font-bold"
+            />
+          </form>
         </div>
-        <img
-          src="mobile-login-mockup.svg"
-          alt="login or register mobile mockup"
-          className="w-130"
-        />
       </section>
     </>
   );

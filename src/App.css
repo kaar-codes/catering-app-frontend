@@ -1,1 +1,20 @@
+.input-element {
+  width: 100%;
+  display: block;
+  border: 1px solid #d0d0d0;
+  border-radius: 10px;
+  font-size: 24px;
+  padding: 1.33rem 1rem;
+  transition: all 0.2s ease-in-out;
+  margin-bottom: 16px;
+}
 
+.input-element:active,
+.input-element:hover {
+  border-color: #916bbf;
+}
+
+.input-element::selection {
+  background-color: #d0d0d0;
+  color: #916bbf;
+}
