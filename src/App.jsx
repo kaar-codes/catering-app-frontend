@@ -3,8 +3,11 @@ import NavBar from "./components/NavBar.jsx";
 import Home from "./pages/Home.jsx";
 import About from "./pages/About.jsx";
 import ContactUs from "./pages/Contact.jsx";
+import Register from "./pages/Register.jsx";
+import Login from "./pages/Login.jsx";
 import Quote from "./pages/Quote.jsx";
 import { Routes, Route, BrowserRouter } from "react-router-dom";
+
 
 function App() {
   const isUserLoggedIn = false;
@@ -16,7 +19,9 @@ function App() {
           <Route path="/" element={<Home />}></Route>
           <Route path="/about" element={<About />}></Route>
           <Route path="/contact" element={<ContactUs />}></Route>
-          <Route
+          <Route path="/login" element={<Login />}></Route>
+          <Route path="/register" element={<Register />}></Route>
+          <Route 
             path="/quote"
             element={<Quote isLoggedIn={isUserLoggedIn} />}
           ></Route>
