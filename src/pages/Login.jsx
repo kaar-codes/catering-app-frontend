@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 import MobileMockup from "../components/mobileMockup";
 
@@ -45,6 +46,8 @@ function Login() {
                 setPassword(e.target.value);
               }}
             />
+            <Link to="/forgotpassword">forgot password</Link>
+
             <input
               type="submit"
               value="Sign In"
