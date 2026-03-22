@@ -31,6 +31,9 @@ function Contact() {
               Post, Cuddalore Taluk
             </p>
           </div>
+
+          <p>Scan below to contact via WA</p>
+          <img src="/business-owner-panduraangan-wa.svg" alt="wa chat svg" />
         </div>
         <img src="./contactus.svg" alt="contact us" className="h-screen" />
       </section>
