@@ -1,59 +1,72 @@
 import { useState } from "react";
-import axios from "axios";
+import client from "../utils/api";
 import MobileMockup from "../components/mobileMockup";
+import { useNavigate } from "react-router-dom";
 
-function Login() {
-  const [userEmail, setUserEmail] = useState();
-  const [password, setPassword] = useState();
+function Login({ setUserState }) {
+  const [badAuth, setBadAuth] = useState(false);
+  const [uniqueInfo, setUniqueInfo] = useState("");
+  const [password, setPassword] = useState("");
+  const navigate = useNavigate();
 
-  async function sendLoginCredentials(e) {
-    e.preventDefault();
+  async function handleLogin(e) {
     try {
-      const uri = "http://localhost:3000/auth/login";
-      const response = await axios.post(uri, { email: userEmail, password });
-      console.log(response.data);
-    } catch (error) {
-      console.log(error.message);
+      e.preventDefault();
+      const { userObj, accessToken } = (
+        await client.post("/auth/login", {
+          uniqueQuery: uniqueInfo,
+          password,
+        })
+      ).data;
+      localStorage.setItem("token", accessToken);
+      // Set the user state as Logged In
+      setUserState(userObj);
+      navigate("/");
+    } catch {
+      setBadAuth(true);
     }
   }
 
   return (
-    <>
-      <section className="flex justify-between">
+    localStorage.getItem("token") || (
+      <section className="flex justify-between h-screen">
         <MobileMockup />
-        <div className="p-48  w-1/2 flex flex-col gap-y-10">
-          <h2 className="text-3xl text-center">Sign In Account</h2>
-          <form className="grid gap-2" onSubmit={sendLoginCredentials}>
+
+        <div className="w-1/2 flex flex-col justify-center px-20 gap-6">
+          <h2 className="text-4xl text-center font-semibold">
+            Sign in to the Application
+          </h2>
+
+          {badAuth ? <p>Bad Authentication</p> : ""}
+
+          <div className="grid gap-4">
             <input
               type="email"
               className="input-element"
-              name="email"
-              placeholder="Email address here"
+              placeholder="Email or phone"
               required
               autoFocus
-              onChange={(e) => {
-                setUserEmail(e.target.value);
-              }}
+              onChange={(e) => setUniqueInfo(e.target.value)}
             />
+
             <input
               type="password"
               className="input-element"
-              name="password"
               placeholder="Enter your password"
               required
-              onChange={(e) => {
-                setPassword(e.target.value);
-              }}
+              onChange={(e) => setPassword(e.target.value)}
             />
-            <input
-              type="submit"
-              value="Sign In"
-              className="bg-[#916BBF] p-3 rounded-lg text-2xl text-white font-bold"
-            />
-          </form>
+
+            <button
+              className="bg-[#916BBF] p-3 rounded-lg text-xl text-white font-bold"
+              onClick={handleLogin}
+            >
+              Sign In
+            </button>
+          </div>
         </div>
       </section>
-    </>
+    )
   );
 }
 

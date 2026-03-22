@@ -1,25 +1,41 @@
 import "./App.css";
-import NavBar from "./components/NavBar.jsx";
-import Home from "./pages/Home.jsx";
-import About from "./pages/About.jsx";
-import ContactUs from "./pages/Contact.jsx";
-import Quote from "./pages/Quote.jsx";
-import { Routes, Route, BrowserRouter } from "react-router-dom";
+import { useState } from "react";
+import NavBar from "./components/NavBar";
+import Login from "./pages/Login";
+import Home from "./pages/Home";
+import Profile from "./pages/Profile";
+import Quote from "./pages/Quote";
+import About from "./pages/About";
+import Contact from "./pages/Contact";
+import {
+  Routes,
+  Route,
+  BrowserRouter,
+  Outlet,
+  Navigate,
+} from "react-router-dom";
+import Register from "./pages/Register";
 
 function App() {
-  const isUserLoggedIn = false;
+  // Initialize with no user state
+  const [user, setUser] = useState(null);
   return (
     <>
       <BrowserRouter>
-        {/* <NavBar /> */}
+        <NavBar user={user} />
         <Routes>
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/about" element={<About />}></Route>
-          <Route path="/contact" element={<ContactUs />}></Route>
-          <Route
-            path="/quote"
-            element={<Quote isLoggedIn={isUserLoggedIn} />}
-          ></Route>
+          <Route path="/" element={<Home />} />
+          <Route path="/about" element={<About />} />
+          <Route path="/register" element={<Register />} />
+          <Route path="/contact" element={<Contact />} />
+          <Route path="/login" element={<Login setUserState={setUser} />} />
+          <Route element={user ? <Outlet /> : <Navigate to="/login" replace />}>
+            <Route
+              path="/profile"
+              element={<Profile user={user} setUser={setUser} />}
+            />
+            <Route path="/askquote" element={<Quote />}></Route>
+          </Route>
         </Routes>
       </BrowserRouter>
     </>
