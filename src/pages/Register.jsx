@@ -23,7 +23,6 @@ function Register() {
     }
 
     try {
-      alert("Registration successful!");
       await client.post("/user/register", {
         firstName,
         lastName,
@@ -33,7 +32,7 @@ function Register() {
         phone,
         role: isAdmin ? "ADMIN" : "CUSTOMER",
       });
-      navigate("/login");
+      await navigate("/login");
     } catch (error) {
       console.log(error.response?.data || error.message);
       alert("Registration failed");
@@ -49,7 +48,7 @@ function Register() {
           Create New Account
         </h2>
 
-        <form className="grid gap-4" onSubmit={sendRegisterData}>
+        <div className="grid gap-4">
           <div className="flex gap-4">
             <input
               type="text"
@@ -116,7 +115,7 @@ function Register() {
           >
             Sign Up
           </button>
-        </form>
+        </div>
       </div>
     </section>
   );
