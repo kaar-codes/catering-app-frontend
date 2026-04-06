@@ -1,7 +1,7 @@
-// import dayjs from "dayjs";
-// import { useState } from "react";
+import dayjs from "dayjs";
+import { useState } from "react";
 
-function Quote({ user }) {
+function Quote() {
   const [eventDate, setEventDate] = useState(dayjs());
   return (
     <>

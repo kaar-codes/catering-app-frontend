@@ -18,7 +18,7 @@ import Register from "./pages/Register";
 
 function App() {
   // Initialize with no user state
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(localStorage.getItem("token"));
   return (
     <>
       <BrowserRouter>
@@ -28,7 +28,12 @@ function App() {
           <Route path="/about" element={<About />} />
           <Route path="/register" element={<Register />} />
           <Route path="/contact" element={<Contact />} />
-          <Route path="/login" element={<Login setUserState={setUser} />} />
+          <Route
+            path="/login"
+            element={
+              user ? <Quote replace /> : <Login setUserState={setUser} />
+            }
+          />
           <Route element={user ? <Outlet /> : <Navigate to="/login" replace />}>
             <Route
               path="/profile"
