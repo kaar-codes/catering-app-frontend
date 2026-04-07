@@ -19,6 +19,7 @@ function Login({ setUserState }) {
         })
       ).data;
       localStorage.setItem("token", accessToken);
+      localStorage.setItem("user", JSON.stringify(userObj));
       // Set the user state as Logged In
       setUserState(userObj);
       navigate("/");
