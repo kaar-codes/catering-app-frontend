@@ -12,7 +12,7 @@ function Register() {
   const [email, setUserEmail] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [isAdmin, setIsAdmin] = useState("CUSTOMER");
+  const [isAdmin, setIsAdmin] = useState(false);
 
   async function sendRegisterData(e) {
     e.preventDefault();
@@ -102,9 +102,8 @@ function Register() {
             <input
               type="checkbox"
               className="w-5 h-5"
-              onChange={(e) => {
-                console.log(e.target.checked);
-                setIsAdmin(e.target.checked ? "ADMIN" : "CUSTOMER");
+              onClick={() => {
+                setIsAdmin(!isAdmin);
               }}
             />
             <span>Admin</span>
