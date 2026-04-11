@@ -77,7 +77,7 @@ function EventType({ setEvent }) {
 }
 
 function Quote({ userState }) {
-  const { email, contact } = userState;
+  const { email, phone } = userState;
   const [eventTitle, setEventTitle] = useState();
   const [eventDescription, setEventDescription] = useState();
   const [eventDate, setEventDate] = useState(dayjs());
@@ -89,12 +89,15 @@ function Quote({ userState }) {
     e.preventDefault();
 
     try {
+      const formattedEventDate = eventDate
+        ? eventDate.format("YYYY-MM-DD")
+        : null;
       const payload = {
-        eventDate,
+        eventDate: formattedEventDate,
         guestRange,
         eventType,
         email,
-        contact,
+        phone,
         place,
         eventTitle,
         eventDescription,
@@ -102,7 +105,11 @@ function Quote({ userState }) {
 
       console.log(payload);
 
-      const res = await client.post("/quote/addQuote", payload);
+      const res = await client.post("/quote/addQuote", payload, {
+        headers: {
+          Authorization: `Bearer ${localStorage.getItem("token")}`,
+        },
+      });
 
       if (res.status === 200 || res.status === 201) {
         alert("Quote Created Successfully");
@@ -148,23 +155,21 @@ function Quote({ userState }) {
             onChange={(e) => setPlace(e.target.value)}
           />
           <div></div>
-          <LocalizationProvider
-            dateAdapter={AdapterDayjs}
-            adapterLocale="en-in"
-          >
+          <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en">
             <DatePicker
               label="Event Date"
               value={eventDate}
               format="YYYY-MM-DD"
-              onChange={(newValue) =>
-                setEventDate(newValue ? newValue.format("YYYY-MM-DD") : null)
-              }
+              onChange={(newValue) => setEventDate(newValue)}
             />
           </LocalizationProvider>
 
           <GuestRange setRange={setGuestRange} />
 
           <EventType setEvent={setEventType} />
+
+          {/* <Menu /> */}
+
           <input
             type="submit"
             value="Ask Quote"
