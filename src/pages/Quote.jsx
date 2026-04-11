@@ -3,6 +3,7 @@ import { useState } from "react";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import Menu from "../components/menu";
 import client from "../utils/api";
 
 function GuestRange({ setRange }) {
@@ -123,7 +124,7 @@ function Quote({ userState }) {
 
   return (
     <>
-      <form className="p-14">
+      <form className="p-14 grid grid-cols-1">
         <h1 className="text-4xl my-10">
           Please put yourselves free to enter the details
         </h1>
@@ -154,7 +155,6 @@ function Quote({ userState }) {
             className="text-2xl border-b-2 block min-w-100 p-1 resize-none outline-0 w-full"
             onChange={(e) => setPlace(e.target.value)}
           />
-          <div></div>
           <LocalizationProvider dateAdapter={AdapterDayjs} adapterLocale="en">
             <DatePicker
               label="Event Date"
@@ -163,20 +163,16 @@ function Quote({ userState }) {
               onChange={(newValue) => setEventDate(newValue)}
             />
           </LocalizationProvider>
-
           <GuestRange setRange={setGuestRange} />
-
           <EventType setEvent={setEventType} />
-
-          {/* <Menu /> */}
-
-          <input
-            type="submit"
-            value="Ask Quote"
-            className="bg-violet-300 p-3"
-            onClick={handleSendQuote}
-          />
         </div>
+        <Menu />
+        <input
+          type="submit"
+          value="Ask Quote"
+          className="bg-violet-300 p-3"
+          onClick={handleSendQuote}
+        />
       </form>
     </>
   );
