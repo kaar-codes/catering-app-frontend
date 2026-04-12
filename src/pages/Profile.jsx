@@ -36,7 +36,7 @@ function Profile({ user, setUser }) {
 
   useEffect(() => {
     fetchData();
-  }, []);
+  });
 
   async function moveStatusContent(quote, changeTo) {
     try {
@@ -97,12 +97,14 @@ function Profile({ user, setUser }) {
                   alt="mobile front side"
                 />
                 <span>{quote.eventType}</span>
-                <img
-                  className="w-13"
-                  src="./ico-phone.svg"
-                  alt="mobile front side"
-                />
-                <span>{quote.phone}</span>
+                <span>
+                  <img
+                    className="block w-13"
+                    src="./ico-phone.svg"
+                    alt="mobile front side"
+                  />
+                  {quote.phone}
+                </span>
                 <span>{quote.eventDate.split("T").at(0)}</span>
               </div>
               {quote.status !== "Cancel" && (
