@@ -49,6 +49,7 @@ export default function Menu({ setUser, setMenu }) {
               menuname: val.menuname,
               category: val.category,
             };
+            setMenu(menuItemWithoutDescription);
             setSelectedMenu((prev) =>
               prev.some(
                 (item) =>
@@ -62,7 +63,6 @@ export default function Menu({ setUser, setMenu }) {
                   )
                 : [...prev, val],
             );
-            setMenu(selected);
           }}
         >
           <h1 className="text-2xl">{val.menuname}</h1>
