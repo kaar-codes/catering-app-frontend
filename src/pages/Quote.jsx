@@ -5,6 +5,7 @@ import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import Menu from "../components/menu";
 import client from "../utils/api";
+import { useNavigate } from "react-router-dom";
 
 function GuestRange({ setRange }) {
   const options = ["100 - 250", "250 - 500", "500 - 1000", "Other"];
@@ -77,14 +78,16 @@ function EventType({ setEvent }) {
   );
 }
 
-function Quote({ userState }) {
-  const { email, phone } = userState;
+function Quote({ setUser }) {
+  const { email, phone } = JSON.parse(localStorage.getItem("user"));
   const [eventTitle, setEventTitle] = useState();
   const [eventDescription, setEventDescription] = useState();
   const [eventDate, setEventDate] = useState(dayjs());
   const [guestRange, setGuestRange] = useState("100-250");
   const [eventType, setEventType] = useState("birthday");
   const [place, setPlace] = useState();
+  const [menu, setMenu] = useState([]);
+  const navigate = useNavigate();
 
   async function handleSendQuote(e) {
     e.preventDefault();
@@ -102,6 +105,7 @@ function Quote({ userState }) {
         place,
         eventTitle,
         eventDescription,
+        menu,
       };
 
       console.log(payload);
@@ -114,6 +118,7 @@ function Quote({ userState }) {
 
       if (res.status === 200 || res.status === 201) {
         alert("Quote Created Successfully");
+        navigate("/profile");
       } else {
         alert("Error Occurred");
       }
@@ -166,7 +171,10 @@ function Quote({ userState }) {
           <GuestRange setRange={setGuestRange} />
           <EventType setEvent={setEventType} />
         </div>
-        <Menu />
+        <h1 className="text-3xl mt-3">Choose your preferred menu</h1>
+        <div className="grid grid-cols-3 gap-3">
+          <Menu setUser={setUser} setMenu={setMenu} />
+        </div>
         <input
           type="submit"
           value="Ask Quote"

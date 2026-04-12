@@ -65,12 +65,12 @@ function About() {
 
         <div className="flex flex-col items-center">
           <img
-            src=""
+            src="./founder-mockup-image.jpg"
             alt="founder"
             className="w-65 h-64 rounded-full object-cover shadow-lg mb-6"
           />
 
-          <h3 className="text-2xl font-semibold">Pandurangan</h3>
+          <h3 className="text-2xl font-semibold">Founder Name here</h3>
           <p className="text-[#322E2E]-600">Solo proprietor</p>
         </div>
       </div>

@@ -44,9 +44,7 @@ function App() {
             <Route path="/contact" element={<Contact />} />
             <Route
               path="/login"
-              element={
-                user ? <Quote replace /> : <Login setUserState={setUser} />
-              }
+              element={user ? <Quote replace /> : <Login setUser={setUser} />}
             />
             <Route
               element={user ? <Outlet /> : <Navigate to="/login" replace />}
@@ -57,7 +55,7 @@ function App() {
               />
               <Route
                 path="/askquote"
-                element={<Quote userState={user} />}
+                element={<Quote setUser={setUser} />}
               ></Route>
             </Route>
           </Routes>

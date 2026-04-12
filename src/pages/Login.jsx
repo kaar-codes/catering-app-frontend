@@ -3,7 +3,7 @@ import client from "../utils/api";
 import MobileMockup from "../components/mobileMockup";
 import { useNavigate, Navigate } from "react-router-dom";
 
-function Login({ setUserState }) {
+function Login({ setUser }) {
   const [badAuth, setBadAuth] = useState(false);
   const [uniqueInfo, setUniqueInfo] = useState("");
   const [password, setPassword] = useState("");
@@ -21,7 +21,7 @@ function Login({ setUserState }) {
       localStorage.setItem("token", accessToken);
       localStorage.setItem("user", JSON.stringify(userObj));
       // Set the user state as Logged In
-      setUserState(userObj);
+      setUser(userObj);
       navigate("/");
     } catch {
       setBadAuth(true);
